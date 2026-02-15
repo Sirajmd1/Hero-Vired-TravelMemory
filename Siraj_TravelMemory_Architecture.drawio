@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36" version="29.4.0">
+  <diagram id="travelmemory-arch" name="TravelMemory Deployment Architecture">
+    <mxGraphModel dx="1123" dy="661" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t1" parent="1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;fontStyle=1;" value="TravelMemory (MERN) — AWS EC2 + Nginx + ALB + Cloudflare + MongoDB Atlas" vertex="1">
+          <mxGeometry height="40" width="1000" x="80" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="u1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Users / Browser" vertex="1">
+          <mxGeometry height="60" width="160" x="60" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="cf1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="Cloudflare\nDNS + (Optional Proxy/SSL)&lt;div&gt;https://sirajtm.in&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="220" x="280" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="fe1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" value="Frontend EC2\nNginx serves React build" vertex="1">
+          <mxGeometry height="120" width="260" x="560" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="fe2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;dashed=1;fontSize=11;" value="/var/www/travelmemory\n(index.html + static/)" vertex="1">
+          <mxGeometry height="70" width="210" x="585" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="alb1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" value="Backend Application Load Balancer (ALB)\nListener: 80/443\nTarget group: backend EC2s" vertex="1">
+          <mxGeometry height="120" width="260" x="560" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="beBox" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12;fontStyle=1;" value="Backend EC2 Instances (2+)" vertex="1">
+          <mxGeometry height="220" width="260" x="870" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="be1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" value="Backend EC2 #1\nNginx :80 → Node :3000\nPM2 manages Node" vertex="1">
+          <mxGeometry height="80" width="220" x="890" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="be2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=11;" value="Backend EC2 #2\nNginx :80 → Node :3000\nPM2 manages Node" vertex="1">
+          <mxGeometry height="80" width="220" x="890" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="db1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="MongoDB Atlas\n(Cloud Database)&lt;div&gt;mongodb+srv://admin:pwd@cluster0.c8fpquj.mongodb.net/TravelMemory&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="260" x="560" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="note1" parent="1" style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" value="Cloudflare DNS Records\nA: sirajtm.in → Frontend EC2 Public IP\nCNAME: api.sirajtm.in → ALB DNS" vertex="1">
+          <mxGeometry height="110" width="240" x="280" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="u1" style="endArrow=block;html=1;strokeWidth=2;" target="cf1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="cf1" style="endArrow=block;html=1;strokeWidth=2;" target="fe1" value="HTTP/HTTPS">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="fe1" style="endArrow=block;html=1;dashed=1;strokeWidth=2;" target="fe2" value="serves static">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="fe1" style="endArrow=block;html=1;strokeWidth=2;" target="alb1" value="API calls\napi.sirajtm.in">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="alb1" style="endArrow=block;html=1;strokeWidth=2;" target="be1" value="forwards to targets">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="alb1" style="endArrow=block;html=1;strokeWidth=2;" target="be2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="be1" style="endArrow=block;html=1;strokeWidth=2;" target="db1" value="MONGO_URI">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="be2" style="endArrow=block;html=1;strokeWidth=2;" target="db1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
